@@ -3,8 +3,30 @@ import datetime
 
 class User(Document):
     username = StringField(required=True, unique=True)
-    email = EmailField(required=True)
     password_hash = StringField(required=True)
+    priorities = ListField(StringField())
+    goals = ListField(StringField()) 
+    schedule = ListField(DictField())
+
+    def to_dict(self):
+        return {
+            'username': str(self.username),
+            'priorities': list(self.priorities),
+            'goals': list(self.goals),
+            'schedule': list(self.schedule)
+        }
+
+class Goals(Document):
+    user = ReferenceField(User, required=True)
+    goal_id = StringField(required=True)
+    goal_name = StringField(required=True)
+    goal_description = StringField()
+    goal_creation_date = DateTimeField(default=datetime.datetime.now)
+    goal_start_date = DateTimeField()
+    goal_end_date = DateTimeField()
+    goal_status = StringField() #Active, Completed, Failed
+    goal_priority = StringField() #High, Medium, Low
+    
 
 
 class Habit(Document):
