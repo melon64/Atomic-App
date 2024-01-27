@@ -40,6 +40,16 @@ def create_goal():
         'isPrivate': request.form.get('isPrivate'),
     }
 
+    #create the prompt with goal_name/desc
+    #res = cohere.get()
+    # new_task = Task(
+    #     task_name=res["taskname"],
+    #     start_time=,
+    #     end_time=,
+    #     day=
+    # )
+    # user.update(push__schedule=new_task)
+
     file = request.files.get('image')
     if file:
         blob = bucket.blob(file.filename)
