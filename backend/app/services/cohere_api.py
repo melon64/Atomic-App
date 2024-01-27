@@ -37,7 +37,9 @@ class CohereAPI:
                             \"day-of-week\": tue\n\
                         },\n]\n\
                     }\n\
-                    It is crucial that the response is in valid json format with no additional explanation text following the response. It is also crucial that the bot follows my template exactly.\
+                    It is crucial that the response is in valid json format \
+                    with no additional explanation text following the response. \
+                    It is also crucial that the bot follows my template exactly.\
                     The following is the goal I would like the bot to break down: "
         message += goal
         chat_history = []
