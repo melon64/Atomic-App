@@ -6,10 +6,13 @@ import urllib
 import hashlib
 from flask_jwt_extended import JWTManager, create_access_token, get_jwt_identity, jwt_required
 import datetime
+from flask_cors import CORS
 
 def create_app():
     app = Flask(__name__)
     settings = Settings()
+
+    CORS(app)
 
     app.config['MONGODB_SETTINGS'] = {
         'db': settings.db_name,
