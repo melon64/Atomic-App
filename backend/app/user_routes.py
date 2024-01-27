@@ -64,6 +64,17 @@ def delete_user():
     return jsonify({"message": "User deleted"}), 200
 
 
+@user_routes.route('/user/goal', methods=['POST'])
+@jwt_required()
+def create_goal():
+    new_goal = request.get_json()
+    user = User.objects(username=get_jwt_identity()).first()
+    new_goal['user'] = user
+    goal = Goals(**new_goal).save()
+    user.update(push__goals=goal)
+    return jsonify(goal.to_dict()), 200
+
+
 
     
 
