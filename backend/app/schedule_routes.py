@@ -64,7 +64,6 @@ def get_schedule():
     schedule = [task.to_mongo() for task in user.schedule]    
     return jsonify(schedule), 200
 
-#delete task from schedule based on task name
 @schedule_routes.route('/user/schedule/<task_id>', methods=['DELETE'])
 @jwt_required()
 def delete_task(task_id):
