@@ -35,6 +35,7 @@ def create_goal():
         'goal_name': request.form.get('goal_name'),
         'goal_description': request.form.get('goal_description'),
         'goal_start_date': request.form.get('goal_start_date'),
+        'goal_duration': request.form.get('goal_duration'),
         'goal_status': request.form.get('goal_status'),
         'goal_priority': request.form.get('goal_priority'),
         'isPrivate': request.form.get('isPrivate'),
