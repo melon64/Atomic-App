@@ -4,7 +4,7 @@ from flask_jwt_extended import JWTManager, create_access_token, get_jwt_identity
 import datetime
 import hashlib
 import urllib
-from .models.model import User, Habit, AIModelData, CalendarEvent, Proof
+from .models.model import User
 
 user_routes = Blueprint('user_routes', __name__)
 
@@ -62,17 +62,6 @@ def delete_user():
     user = User.objects(username=get_jwt_identity()).first()
     user.delete()
     return jsonify({"message": "User deleted"}), 200
-
-
-@user_routes.route('/user/goal', methods=['POST'])
-@jwt_required()
-def create_goal():
-    new_goal = request.get_json()
-    user = User.objects(username=get_jwt_identity()).first()
-    new_goal['user'] = user
-    goal = Goals(**new_goal).save()
-    user.update(push__goals=goal)
-    return jsonify(goal.to_dict()), 200
 
 
 

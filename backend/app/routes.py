@@ -1,18 +1,22 @@
 from flask import Blueprint, request, jsonify
-from .models.model import User, Habit, AIModelData, CalendarEvent, Proof
+from .models.model import User
 from google.cloud import storage
-from .settings 
+from .settings import Settings
+import os
 
 main = Blueprint('main', __name__)
 
+settings = Settings()
+os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = settings.GOOGLE_APPLICATION_CREDENTIALS
+
 storage_client = storage.Client()
-bucket = storage_client.bucket()
+bucket = storage_client.bucket(settings.db_name)
 
 @main.route('/')
 def index():
     return "Hello World!"
 
-@app.route('/upload', methods=['POST'])
+@main.route('/upload', methods=['POST'])
 def upload_image():
     file = request.files['file']
     blob = bucket.blob(file.filename)

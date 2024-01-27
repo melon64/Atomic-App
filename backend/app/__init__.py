@@ -1,7 +1,7 @@
 from flask import Flask, request, jsonify
 from mongoengine import connect
 from .settings import Settings
-from .models.model import User, Habit, AIModelData, CalendarEvent, Proof
+from .models.model import User
 import urllib
 import hashlib
 from flask_jwt_extended import JWTManager, create_access_token, get_jwt_identity, jwt_required
@@ -27,5 +27,8 @@ def create_app():
 
     from .user_routes import user_routes as user_blueprint
     app.register_blueprint(user_blueprint)
+
+    from .goal_routes import goal_routes as goal_blueprint
+    app.register_blueprint(goal_blueprint)
 
     return app
