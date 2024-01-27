@@ -1,13 +1,14 @@
 """ a """
 import cohere
 from typing import List, Dict
+from ..settings import Settings
 
 
 class CohereAPI:
     """ no """
     def __init__(self):
-        # self.co = cohere.Client(settings.cohere_api_key)
-        self.co = cohere.Client('p4u5yGV8CvOr89ISnzCpIp3l5XSECKULIVJvarB7')
+        settings = Settings()
+        self.co = cohere.Client(settings.cohere_api_key)
 
     def generate_schedule(self, goal: str, schedule: List[Dict[str, str]]) -> str:
         message = "This is a bot that will take a goal and break it down into \
