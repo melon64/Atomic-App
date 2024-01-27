@@ -1,12 +1,38 @@
-from mongoengine import Document, StringField, EmailField, ListField, ReferenceField, DateTimeField, IntField, DictField
+from mongoengine import Document, StringField, EmailField, ListField, ReferenceField, DateTimeField, IntField, DictField, EmbeddedDocumentField, EmbeddedDocument
+from datetime import time, datetime
 import datetime
 
+class Task(EmbeddedDocument):
+    goal = ReferenceField('Goals')
+    task_name = StringField(required=True)
+    start_time = StringField(default=time(hour=0).isoformat())
+    end_time = StringField(default=time(hour=23).isoformat())
+    day = IntField(min_value=0, max_value=6, required=True)  # 0 = Sunday, 1 = Monday, ..., 6 = Saturday
+
+    def to_dict(self):
+        return {
+            'goal': str(self.goal.id),
+            'task_name': str(self.task_name),
+            'start_time': str(self.start_time),
+            'end_time': str(self.end_time),
+            'day': int(self.day)
+        }
+
+    def to_dict(self):
+        return {
+            'goal': str(self.goal.id),
+            'task_name': str(self.task_name),
+            'start_time': str(self.start_time),
+            'end_time': str(self.end_time),
+            'day': int(self.day)
+        }
+        
 class User(Document):
     username = StringField(required=True, unique=True)
     password_hash = StringField(required=True)
     priorities = ListField(StringField())
     goals = ListField(ReferenceField('Goals'))
-    schedule = ListField(DictField())
+    schedule = ListField(EmbeddedDocumentField(Task))
 
     def to_dict(self):
         return {
@@ -59,7 +85,6 @@ class Comment(Document):
             'image_url': str(self.image_url),
             'creation_date': str(self.creation_date)
         }
-
 
 
     

@@ -62,10 +62,3 @@ def delete_user():
     user = User.objects(username=get_jwt_identity()).first()
     user.delete()
     return jsonify({"message": "User deleted"}), 200
-
-
-
-    
-
-  
-

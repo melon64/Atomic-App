@@ -33,5 +33,8 @@ def create_app():
 
     from .goal_routes import goal_routes as goal_blueprint
     app.register_blueprint(goal_blueprint)
+    
+    from .schedule_routes import schedule_routes as schedule_blueprint
+    app.register_blueprint(schedule_blueprint)
 
     return app
