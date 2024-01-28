@@ -39,7 +39,7 @@ class User(Document):
             'username': str(self.username),
             'priorities': list(self.priorities),
             'goals': [str(goal.id) for goal in self.goals],
-            'schedule': list(self.schedule)
+            'schedule': [task.to_mongo().to_dict() for task in self.schedule],
         }
 
 class Goals(Document):
@@ -54,6 +54,7 @@ class Goals(Document):
     goal_priority = StringField() #High, Medium, Low
     isPrivate = StringField() #True, False
     comments = ListField(ReferenceField('Comment'))
+    tasks = ListField(EmbeddedDocumentField(Task))
 
     def to_dict(self):
         return {
@@ -67,7 +68,8 @@ class Goals(Document):
             'goal_status': str(self.goal_status),
             'goal_priority': str(self.goal_priority),
             'isPrivate': str(self.isPrivate),
-            'comments': [str(comment.id) for comment in self.comments]
+            'comments': [str(comment.id) for comment in self.comments],
+            'tasks': [task.to_mongo().to_dict() for task in self.tasks]
         }
 
 class Comment(Document):
