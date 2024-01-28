@@ -7,6 +7,21 @@ interface UserData {
     password: string;
 }
 
+interface Comment {
+    goal: string;
+    user: string;
+    text: string;
+    image: File | null;
+    creation_date: string;
+}
+
+export function setupAxios() {
+    const token = localStorage.getItem('authToken');
+    if (token) {
+        axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+    }
+}
+
 const apiService = {
     signUp: async (userData: UserData) => {
         try {
@@ -42,9 +57,65 @@ const apiService = {
             throw error;
         }
     },
-    GetGoal: async (goalId: string) => {
+    getGoals: async () => {
+        try {
+            const response = await axios.get(`${API_BASE_URL}/goal`);
+            return response.data;
+        } catch (error) {
+            throw error;
+        }
+    },
+    getGoal: async (goalId: string) => {
         try {
             const response = await axios.get(`${API_BASE_URL}/goal/${goalId}`);
+            return response.data;
+        } catch (error) {
+            throw error;
+        }
+    },
+    GetTaskList: async () => {
+        try {
+            const response = await axios.get(`${API_BASE_URL}/user/goals`);
+            return response.data;
+        } catch (error) {
+            throw error;
+        }
+    },
+    isValidToken: async () => {
+        try {
+            await axios.post(`${API_BASE_URL}/user/validate`);
+            return true;
+        } catch (error) {
+            return false;
+        }
+    },
+    getTasks: async () => {
+        try {
+            const response = await axios.get(`${API_BASE_URL}/user/tasks`)
+            return response.data
+        } catch (error) {
+            throw error
+        }
+    },
+    addComment: async (goalId: string, comment: FormData) => {
+        try {
+            const response = await axios.post(`${API_BASE_URL}/goal/${goalId}/comment`, comment);
+            return response.data;
+        } catch (error) {
+            throw error;
+        }
+    },
+    getComments: async (goalId: string) => {
+        try {
+            const response = await axios.get(`${API_BASE_URL}/goal/${goalId}/comment`);
+            return response.data;
+        } catch (error) {
+            throw error;
+        }
+    },
+    addGoal: async (goal: FormData) => {
+        try {
+            const response = await axios.post(`${API_BASE_URL}/goal`, goal);
             return response.data;
         } catch (error) {
             throw error;
