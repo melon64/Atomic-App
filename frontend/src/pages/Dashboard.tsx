@@ -2,11 +2,17 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import apiService from '../services/apiService';
 import { setupAxios } from '../services/apiService';
+import CalendarComponent from '../components/CalendarComponent';
 
 import TaskList from '../components/TaskList';
 
 import './Dashboard.css';
-
+interface Event {
+    day: number;
+    end_time: string;
+    start_time: string;
+    task_name: string;
+  }
 function Dashboard() {
     const navigate = useNavigate();
 
@@ -26,7 +32,15 @@ function Dashboard() {
         }
         fetchTasks();
     }, []);
-    console.log(tasks);
+    
+    const [events, setEvents] = useState<Event[]>([])
+    useEffect(() => {
+        const fetchEvents = async () => {
+            const result = await apiService.getTasks()
+            setEvents(result)
+        }
+        fetchEvents()
+    }, []) 
 
     return (
         <div className="Dashboard">
@@ -34,7 +48,7 @@ function Dashboard() {
             <div className="panel">
                 <div className="calendar-half">
                     <p>Progress</p>
-                    {/* Calendar component */}
+                    <CalendarComponent events={events} viewType='week'/>
                 </div>
                 <div className="task-list-half">
                     <TaskList tasks={tasks}></TaskList>

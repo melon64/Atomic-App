@@ -11,6 +11,7 @@ interface Event {
 
 interface eventListProps {
   events: Event[]
+  viewType: 'month' | 'week'
 }
 
 interface ParsedEvent {
@@ -19,7 +20,11 @@ interface ParsedEvent {
   end: Date
 }
 
-function CalendarComponent({ events }: eventListProps) {
+interface viewType {
+  view: string
+}
+
+function CalendarComponent({ events, viewType }: eventListProps) {
   // function CalendarComponent() {
   const localizer = momentLocalizer(moment);
   // Function to convert events for all occurrences of a particular day in a month
@@ -68,7 +73,7 @@ function CalendarComponent({ events }: eventListProps) {
           events={calendarEvents}
           startAccessor="start"
           endAccessor="end"
-          defaultView="month"
+          defaultView={ viewType }
           style={{ height: 500 }}
         />
       </div>

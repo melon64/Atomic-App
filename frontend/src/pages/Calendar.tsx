@@ -34,7 +34,7 @@ function Calendar() {
 
     return (
         <div className="Calendar">
-            <CalendarComponent events={events}/>
+            <CalendarComponent events={events} viewType='month'/>
             
         </div>
     );
