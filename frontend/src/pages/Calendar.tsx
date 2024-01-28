@@ -1,11 +1,12 @@
 import React from 'react';
 import './Calendar.css';
+import CalendarComponent from "./CalendarComponent"
 
 
 function Calendar() {
     return (
         <div className="Calendar">
-            <h1>Calendar</h1>
+            <CalendarComponent />
             
         </div>
     );
