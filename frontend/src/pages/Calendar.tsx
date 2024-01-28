@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import './Calendar.css'
-import CalendarComponent from "./CalendarComponent"
+import CalendarComponent from "../components/CalendarComponent"
 import { useNavigate } from 'react-router';
 import apiService, { setupAxios } from '../services/apiService';
 
