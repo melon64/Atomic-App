@@ -9,4 +9,3 @@ function UserGoals() {
 }
 
 export default UserGoals;
-
