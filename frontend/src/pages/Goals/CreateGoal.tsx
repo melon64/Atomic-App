@@ -47,28 +47,34 @@ function CreateGoal() {
     const [image, setImage] = useState<File | null>(null);
 
     
-    const handleSubmit = async (event: React.FormEvent) => {
-        event.preventDefault();
-    
-        const formData = new FormData();
-        formData.append('goal_name', goalName);
-        formData.append('goal_description', goalDescription);
-        formData.append('goal_start_date', goalStartDate);
-        formData.append('goal_duration', goalDuration.toString());
-        formData.append('goal_status', 'Active');
-        formData.append('goal_priority', goalPriority);
-        formData.append('isPrivate', isPrivate);
-        if (image) {
-            formData.append('image', image);
-        }
-        try {
-            const response = await apiService.addGoal(formData);
-            console.log('Goal submitted:', response.data);
-            navigate('/user/goals');
-        } catch (error) {
-            console.error('Error submitting goal:', error);
-        }
-    };
+    const [isSubmitting, setIsSubmitting] = useState(false);
+
+const handleSubmit = async (event: React.FormEvent) => {
+    event.preventDefault();
+
+    setIsSubmitting(true);
+
+    const formData = new FormData();
+    formData.append('goal_name', goalName);
+    formData.append('goal_description', goalDescription);
+    formData.append('goal_start_date', goalStartDate);
+    formData.append('goal_duration', goalDuration.toString());
+    formData.append('goal_status', 'Active');
+    formData.append('goal_priority', goalPriority);
+    formData.append('isPrivate', isPrivate);
+    if (image) {
+        formData.append('image', image);
+    }
+    try {
+        const response = await apiService.addGoal(formData);
+        console.log('Goal submitted:', response.data);
+        navigate('/user/goals');
+    } catch (error) {
+        console.error('Error submitting goal:', error);
+    } finally {
+        setIsSubmitting(false);
+    }
+};
 
     return (
         <form className="CreateGoal" onSubmit={handleSubmit}>
@@ -103,27 +109,30 @@ function CreateGoal() {
             />
 
             <div className="priority-input">
-                <button 
-                    className="button high-priority" 
-                    style={{color: '#D26060'}}
-                    onClick={() => setGoalPriority('High')}
-                >
-                    High Priority
-                </button>
-                <button 
-                    className="button medium-priority" 
-                    style={{color: '#CC861E'}}
-                    onClick={() => setGoalPriority('Medium')}
-                >
-                    Medium Priority
-                </button>
-                <button 
-                    className="button low-priority" 
-                    style={{color: '#7AA789'}}
-                    onClick={() => setGoalPriority('Low')}
-                >
-                    Low Priority
-                </button>
+            <button 
+                type="button"
+                className="button high-priority" 
+                style={{color: '#D26060'}}
+                onClick={() => setGoalPriority('High')}
+            >
+                High Priority
+            </button>
+            <button 
+                type="button"
+                className="button medium-priority" 
+                style={{color: '#CC861E'}}
+                onClick={() => setGoalPriority('Medium')}
+            >
+                Medium Priority
+            </button>
+            <button 
+                type="button"
+                className="button low-priority" 
+                style={{color: '#7AA789'}}  
+                onClick={() => setGoalPriority('Low')}
+            >
+                Low Priority
+            </button>
             </div>
 
             <p>Priority: {goalPriority}</p>
@@ -166,7 +175,7 @@ function CreateGoal() {
                 />
             </div>
             
-            <button type="submit" className="sbutton upload">Submit</button>
+            <button type="submit" disabled={isSubmitting}>Submit</button>
         </form>
     );
 }

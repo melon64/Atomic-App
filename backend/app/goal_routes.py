@@ -168,3 +168,28 @@ def get_comments(id):
     return jsonify([comment.to_dict() for comment in comments]), 200
 
 
+#delete goal and all associated comments and tasks (also from user)
+@goal_routes.route('/goal/<id>', methods=['DELETE'])
+@jwt_required()
+def delete_goal(id):
+    user_id = get_jwt_identity()
+    try:
+        user = User.objects.get(username=user_id)
+    except DoesNotExist:
+        return {'message': 'User not found'}, 404
+    
+    try:
+        goal = Goals.objects.get(id=id)
+    except DoesNotExist:
+        return {'message': 'Goal not found'}, 404
+
+    if goal.user.id != user.id:
+        return {'message': 'Unauthorized'}, 401
+
+    for comment in goal.comments:
+        comment.delete()
+    for task in goal.tasks:
+        user.update(pull__schedule=task)
+    goal.delete()
+    user.update(pull__goals=goal)
+    return {'message': 'Goal deleted'}, 200
