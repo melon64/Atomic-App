@@ -1,0 +1,42 @@
+.nav {
+    display: flex;
+    height: 60px;
+    width: 100%;
+    background-color: #f7f7f7;
+    justify-content: space-between;
+}
+
+.circle {
+    border-radius: 50%;
+    background-color: grey;
+    height: 40px;
+    width: 40px;
+    align-items: center;
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.blockone {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    width: 50%;
+}
+
+.blocktwo {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    width: 20%;
+}
+
+.link {
+    color: #b8b8b8;
+    text-decoration: none;
+    padding: 8px;
+    border-radius: 8px;
+}
+
+.link:hover {
+    background-color: #eeeeee;
+}
