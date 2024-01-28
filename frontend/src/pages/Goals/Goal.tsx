@@ -1,9 +1,12 @@
-import React from 'react';
+import React from 'react'
+import { useParams } from 'react-router-dom'
+import "../../Goal.css";
 
 function Goal() {
+    let { id } = useParams();
     return (
-        <div className="Goal">
-            <h1>Goal</h1>
+        <div className="title">
+            <h1>Goal {id}</h1>
         </div>
     );
 }
