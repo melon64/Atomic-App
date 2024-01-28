@@ -1,0 +1,151 @@
+.CreateGoal {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #EDEFF2;
+    border-radius: 8px;
+    font-family: 'Lexend Deca', sans-serif;
+    color: #A9A9A9;
+}
+
+.goal-name-input {
+    width: 100%;
+    padding: 10px 15px;
+    margin-bottom: 48px;
+    border: 1px solid #D5D8E2;
+    border-radius: 8px;
+    font-size: 64px;
+}
+
+.priority-input {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 48px;
+}
+
+.button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 8px;
+    margin: 0 8px;
+    cursor: pointer;
+    outline: none;
+    font-size: 22px;
+    transition: background-color 0.3s;
+}
+
+.high-priority {
+    background-color: #D9C6C6;
+}
+
+.medium-priority {
+    background-color: #E0D4A8;
+}
+
+.low-priority {
+    background-color: #A5E1A0;
+}
+
+.visibility-toggle {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 48px;
+}
+
+.visibility-toggle label {
+    margin-right: 10px;
+    padding: 10px 15px;
+    border: 1px solid #D5D8E2;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.add-item {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 48px;
+}
+
+.add-item button {
+    font-size: 22px;
+    color: #A9A9A9;
+}
+
+.image-upload-section {
+    border: 2px dashed #D5D8E2;
+    border-radius: 8px;
+    text-align: center;
+    padding: 20px;
+    background-color: #fafafa;
+    margin-bottom: 48px;
+}
+
+.image-upload-section input[type="file"] {
+    width: 100%;
+    padding: 10px 0;
+}
+
+.form-actions {
+    text-align: right;
+    margin-top: 48px;
+}
+
+.form-actions button {
+    padding: 10px 20px;
+    border-radius: 8px;
+    border: none;
+    margin-left: 10px;
+    cursor: pointer;
+    outline: none;
+    transition: background-color 0.3s;
+}
+
+.form-actions button.cancel {
+    background-color: #6c757d; /* Example color for cancel button */
+    color: white;
+}
+
+.form-actions button.upload {
+    background-color: #007bff; /* Example color for upload button */
+    color: white;
+}
+
+.form-actions {
+    text-align: right;
+    display: flex; /* Use flexbox to align children inline */
+    justify-content: flex-end; /* Align children to the end (right side) */
+    margin-top: 48px;
+}
+
+.form-actions button {
+    padding: 10px 20px;
+    border-radius: 8px;
+    border: none;
+    margin-left: 10px; /* Ensure there is some space between the buttons */
+    cursor: pointer;
+    outline: none;
+    transition: background-color 0.3s;
+    font-size: 22px; /* Match the font size to other buttons */
+}
+
+.form-actions button.cancel {
+    background-color: #6c757d; /* Adjust the color for the cancel button */
+    color: white;
+}
+
+.form-actions button.upload {
+    background-color: #007bff; /* Adjust the color for the upload button */
+    color: white;
+}
+
+.goal-description-input {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 48px; /* Consistent vertical spacing */
+    border: 1px solid #D5D8E2;
+    border-radius: 8px;
+    font-size: 22px; /* Consistent font size */
+    font-family: 'Lexend Deca', sans-serif; /* Consistent font family */
+    box-sizing: border-box; /* Ensures padding does not add to width */
+    min-height: 150px; /* Minimum height for the text area */
+}
