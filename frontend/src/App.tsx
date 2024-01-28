@@ -1,4 +1,5 @@
 import React from 'react';
+import { useEffect } from 'react';
 import './App.css';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Login from './pages/Auth/Login';
@@ -10,8 +11,13 @@ import UserGoals from './pages/Goals/UserGoals';
 import CreateTask from './pages/CreateTask';
 import Calendar from './pages/Calendar';
 import Navbar from './components/MyNavbar';
+import { setupAxios } from './services/apiService';
+
 
 function App() {
+  useEffect(() => {
+      setupAxios();
+  }, []);
   return (
     <Router>
       <div className="navbar">
