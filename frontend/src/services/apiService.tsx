@@ -5,7 +5,7 @@ const API_BASE_URL = 'http://localhost:5000';
 interface UserData {
     username: string;
     password: string;
-  }
+}
 
 const apiService = {
     signUp: async (userData: UserData) => {
@@ -34,7 +34,22 @@ const apiService = {
             throw error;
         }
     },
-
+    getProfile: async () => {
+        try {
+            const response = await axios.get(`${API_BASE_URL}/user`);
+            return response.data;
+        } catch (error) {
+            throw error;
+        }
+    },
+    GetGoal: async (goalId: string) => {
+        try {
+            const response = await axios.get(`${API_BASE_URL}/goal/${goalId}`);
+            return response.data;
+        } catch (error) {
+            throw error;
+        }
+    },
 };
 
 export default apiService;

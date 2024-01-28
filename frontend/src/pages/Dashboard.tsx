@@ -1,7 +1,18 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
+import apiService from '../services/apiService';
+import TaskList from '../components/TaskList';
+
 import './Dashboard.css';
 
 function Dashboard() {
+    const navigate = useNavigate();
+
+    const token = localStorage.getItem('authToken');
+    if (!token || token === 'undefined') {
+        navigate('/');
+    }
+
     return (
         <div className="Dashboard">
             <h1>Dashboard</h1>
@@ -11,8 +22,7 @@ function Dashboard() {
                     {/* Calendar component */}
                 </div>
                 <div className="task-list-half">
-                    <p>Tasks</p>
-                    {/* New Task List component */}
+                    <TaskList></TaskList>
                 </div>
             </div>
         </div>
