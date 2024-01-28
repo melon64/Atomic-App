@@ -5,11 +5,14 @@ from flask_jwt_extended import JWTManager, create_access_token, get_jwt_identity
 import datetime
 import hashlib
 import urllib
-from .models.model import Goals, User, Comment
+from .models.model import Goals, User, Comment, Task
 from .settings import Settings
 from google.cloud import storage
 import os
 from werkzeug.exceptions import BadRequest
+from .services.cohere_api import CohereAPI
+import json
+import asyncio
 
 
 goal_routes = Blueprint('goal_routes', __name__)
@@ -21,9 +24,11 @@ os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = settings.GOOGLE_APPLICATION_CREDE
 storage_client = storage.Client()
 bucket = storage_client.bucket(settings.db_name)
 
+cohere = CohereAPI()
+
 @goal_routes.route('/goal', methods=['POST'])
 @jwt_required()
-def create_goal():
+async def create_goal():
     user_id = get_jwt_identity()
     try:
         user = User.objects.get(username=user_id)
@@ -40,16 +45,18 @@ def create_goal():
         'goal_priority': request.form.get('goal_priority'),
         'isPrivate': request.form.get('isPrivate'),
     }
-
-    #create the prompt with goal_name/desc
-    #res = cohere.get()
-    # new_task = Task(
-    #     task_name=res["taskname"],
-    #     start_time=,
-    #     end_time=,
-    #     day=
-    # )
-    # user.update(push__schedule=new_task)
+    
+    task = asyncio.create_task(cohere.generate_schedule(new_goal['goal_description'], None))
+    result = await task
+    result = json.loads(result)['tasks']
+    for task in result:
+        new_task = Task(
+            task_name=task['title'],
+            start_time=task['start'],
+            end_time=task['end'],
+            day=task['day-of-week']
+        )
+        user.update(push__schedule=new_task)
 
     file = request.files.get('image')
     if file:

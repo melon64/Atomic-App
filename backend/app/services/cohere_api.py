@@ -2,6 +2,7 @@
 import cohere
 from typing import List, Dict
 from ..settings import Settings
+import asyncio
 
 
 class CohereAPI:
@@ -10,7 +11,7 @@ class CohereAPI:
         settings = Settings()
         self.co = cohere.Client(settings.cohere_api_key)
 
-    def generate_schedule(self, goal: str, schedule: List[Dict[str, str]]) -> str:
+    async def generate_schedule(self, goal: str, schedule: List[Dict[str, str]]) -> str:
         message = "This is a bot that will take a goal and break it down into \
                     smaller subsequent tasks to be completed by the \
                     completion date specified. The response should follow a \
@@ -19,7 +20,7 @@ class CohereAPI:
                     \"title\" for the title of the task, \"start\" for when in the day\
                     the user should begin this subsequent task, \"end\" for when the user should stop doing this task, and \
                     \"day-of-week\" for which weekday the subsequent task \
-                    should be done on. To give an example of what this bot should do, \
+                    should be done on from integers 0-6 where 0 is sunday and 6 is saturday. To give an example of what this bot should do, \
                     if the goal is to prepare for an upcoming tech interview \
                     by the end of this week, then an example of something that \
                     the bot could return would be \n\
@@ -27,14 +28,14 @@ class CohereAPI:
                         \"tasks\": [{\n\
                             \"title\": Complete 3 leetcode medium problems.\n\
                             \"start\": 10:00\n\
-                            \"duration\": 2\n\
-                            \"day-of-week\": mon\n\
+                            \"end\": 12:00\n\
+                            \"day-of-week\": 1\n\
                         },\n\
                         {\n\
                             \"title\": Practice to a friend.\n\
                             \"start\": 13:00\n\
-                            \"duration\": 2\n\
-                            \"day-of-week\": tue\n\
+                            \"end\": 14:30\n\
+                            \"day-of-week\": 2\n\
                         },\n]\n\
                     }\n\
                     It is crucial that the response is in valid json format \
