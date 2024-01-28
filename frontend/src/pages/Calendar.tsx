@@ -4,10 +4,17 @@ import CalendarComponent from "./CalendarComponent"
 import { useNavigate } from 'react-router';
 import apiService, { setupAxios } from '../services/apiService';
 
+interface Event {
+    day: number;
+    end_time: string;
+    start_time: string;
+    task_name: string;
+  }
+
 
 function Calendar() {
     const navigate = useNavigate();
-    const [events, setEvents] = useState([])
+    const [events, setEvents] = useState<Event[]>([])
 
     useEffect(() => {
       setupAxios();
@@ -19,14 +26,15 @@ function Calendar() {
 
     useEffect(() => {
         const fetchEvents = async () => {
-            const result = await apiService.
+            const result = await apiService.getTasks()
+            setEvents(result)
         }
-    })
-    
+        fetchEvents()
+    }, []) 
 
     return (
         <div className="Calendar">
-            <CalendarComponent />
+            <CalendarComponent events={events}/>
             
         </div>
     );
