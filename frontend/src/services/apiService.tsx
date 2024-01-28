@@ -7,6 +7,14 @@ interface UserData {
     password: string;
 }
 
+interface Comment {
+    goal: string;
+    user: string;
+    text: string;
+    image: File | null;
+    creation_date: string;
+}
+
 export function setupAxios() {
     const token = localStorage.getItem('authToken');
     if (token) {
@@ -79,6 +87,30 @@ const apiService = {
             return true;
         } catch (error) {
             return false;
+        }
+    },
+    addComment: async (goalId: string, comment: FormData) => {
+        try {
+            const response = await axios.post(`${API_BASE_URL}/goal/${goalId}/comment`, comment);
+            return response.data;
+        } catch (error) {
+            throw error;
+        }
+    },
+    getComments: async (goalId: string) => {
+        try {
+            const response = await axios.get(`${API_BASE_URL}/goal/${goalId}/comment`);
+            return response.data;
+        } catch (error) {
+            throw error;
+        }
+    },
+    addGoal: async (goal: FormData) => {
+        try {
+            const response = await axios.post(`${API_BASE_URL}/goal`, goal);
+            return response.data;
+        } catch (error) {
+            throw error;
         }
     },
 };
