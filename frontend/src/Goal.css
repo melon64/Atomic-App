@@ -1,4 +1,15 @@
-.title {
+.container {
     border: 1px solid black;
-    padding-left: 5%;
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+}
+
+h1 {
+    border: 1px solid black;
+    margin-left: 4%;
+}
+.title {
+    /* border: 1px solid black; */
+    /* float: left; */
 }
