@@ -40,7 +40,6 @@ def create_goal():
         'goal_priority': request.form.get('goal_priority'),
         'isPrivate': request.form.get('isPrivate'),
     }
-
     #create the prompt with goal_name/desc
     #res = cohere.get()
     # new_task = Task(
