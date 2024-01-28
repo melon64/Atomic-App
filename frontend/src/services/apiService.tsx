@@ -42,7 +42,7 @@ const apiService = {
             throw error;
         }
     },
-    GetGoal: async (goalId: string) => {
+    getGoal: async (goalId: string) => {
         try {
             const response = await axios.get(`${API_BASE_URL}/goal/${goalId}`);
             return response.data;
