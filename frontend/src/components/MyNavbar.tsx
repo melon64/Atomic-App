@@ -20,7 +20,7 @@ function MyNavbar() {
     <nav className="navbar navbar-expand-lg navbar-light bg-light nav">
       <div className="blockone">
         <div className="circle"><FontAwesomeIcon icon={faCoffee}/></div>
-        <Link className="link" to="/goals">
+        <Link className="link" to="/user/goals">
           View All Goals
         </Link>
         <Link className="link" to="/user">

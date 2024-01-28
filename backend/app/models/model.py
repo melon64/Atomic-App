@@ -58,6 +58,7 @@ class Goals(Document):
 
     def to_dict(self):
         return {
+            'id': str(self.id),
             'user': str(self.user.id),
             'goal_name': str(self.goal_name),
             'goal_description': str(self.goal_description),

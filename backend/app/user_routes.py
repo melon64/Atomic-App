@@ -80,3 +80,15 @@ def get_goals():
         goal_dict['goal_tasks'] = [task.to_mongo().to_dict() for task in goal.tasks]
         goal_array.append(goal_dict)
     return jsonify(goal_array), 200
+
+#get all the tasks of the user from their goals, return as a list of tasks
+@user_routes.route('/user/tasks', methods=['GET'])
+@jwt_required()
+def get_tasks():
+    user = User.objects(username=get_jwt_identity()).first()
+    goals = user.goals
+    task_array = []
+    for goal in goals:
+        for task in goal.tasks:
+            task_array.append(task.to_mongo().to_dict())
+    return jsonify(task_array), 200
