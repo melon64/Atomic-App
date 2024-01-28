@@ -1,0 +1,29 @@
+.goal-card {
+    margin: 10px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    box-shadow: 2px 2px 2px #ccc;
+    border-radius: 5px;
+    background-color: #fff;
+    width: 300px;
+    height: 300px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    text-align: center;
+    position: relative;
+    transition: box-shadow 0.3s ease-in-out;
+}
+
+.goal-card:hover {
+    box-shadow: 8px 4px 4px #707070;
+}
+
+.GoalList{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+}
