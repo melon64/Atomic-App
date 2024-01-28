@@ -19,8 +19,8 @@ const apiService = {
     logIn: async (userData: UserData) => {
         try {
             const response = await axios.post(`${API_BASE_URL}/user/login`, userData);
-            localStorage.setItem('authToken', response.data.token);
-            axios.defaults.headers.common['Authorization'] = `Bearer ${response.data.token}`;
+            localStorage.setItem('authToken', response.data['access_token']);
+            axios.defaults.headers.common['Authorization'] = `Bearer ${response.data['access_token']}`;
             return response.data;
         } catch (error) {
             throw error;
