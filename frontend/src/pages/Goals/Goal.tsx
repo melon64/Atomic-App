@@ -5,6 +5,9 @@ import apiService from '../../services/apiService';
 import { setupAxios } from '../../services/apiService';
 import { useNavigate } from 'react-router-dom';
 import Comments from '../../components/Comments';
+import CalendarComponent from '../../components/CalendarComponent';
+import moment from 'moment';
+import CalendarForGoals from '../../components/CalendarForGoals';
 
 interface Task {
     day: number;
@@ -37,6 +40,10 @@ interface GoalInterface {
     user: string;
 }
 
+interface DurationInterface {
+    duration: number
+}
+
 function Goal() {
     const navigate = useNavigate();
     useEffect(() => {
@@ -60,8 +67,11 @@ function Goal() {
         }
         getGoal()
     }, [])
-
+    console.log("adofjaspfjasf")
     console.log(goal);
+
+
+
 
     const [commentText, setCommentText] = useState('');
 
@@ -93,16 +103,47 @@ function Goal() {
             if (commentImage) {
                 formData.append('image', commentImage);
             }
-            await apiService.addComment(params.id, formData);    
+            await apiService.addComment(params.id, formData);
 
             setCommentText('');
             setCommentImage(null);
-            
+
             window.location.reload();
         } catch (error) {
             console.error("Error submitting comment: ", error)
         }
     };
+
+    const start_date = moment(goal?.goal_start_date); // Replace with your actual start date
+    const duration = goal?.goal_duration ?? '7'; // Replace with your desired duration in days
+
+    // Initialize an array to store the events
+    const events = [];
+
+    // Get the current month and year
+    const currentMonth = moment().month();
+    const currentYear = moment().year();
+
+    // Create events for each day in the current month and year
+    for (let i = 0; i < parseInt(duration); i++) {
+        // Calculate the date for the current day in the loop
+        const currentDate = start_date.clone().add(i, 'days');
+
+        // Check if the date is in the current month and year
+        if (currentDate.month() === currentMonth && currentDate.year() === currentYear) {
+            // This date is in the current month and year
+            // Create an event using the same format as before
+            const event = {
+                day: currentDate.day(), // Day of the week (0 to 6, 0 is Sunday)
+                start_time: '08:00', // Replace with your desired start time
+                end_time: '17:00',   // Replace with your desired end time
+                task_name: 'Your Task', // Replace with the task name
+            };
+
+            events.push(event);
+        }
+    }
+    console.log(events)
 
     return (
         <div className="GoalBox">
@@ -113,7 +154,7 @@ function Goal() {
                 <span>Privacy: {goal?.isPrivate === 'true' ? 'Private' : 'Public'}</span>
             </div>
             <p>{goal?.goal_description}</p>
-            {/* Calendar Component */}
+            <CalendarForGoals startTime={goal?.goal_start_date ?? ''} duration={parseInt(goal?.goal_duration ?? '7')} />
             <p>Total number of tasks: {goal?.tasks.length}</p>
             <p>Day started: {goal?.goal_creation_date.split(' ')[0]}</p>
 
