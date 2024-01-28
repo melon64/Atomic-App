@@ -6,6 +6,7 @@
 .calendar-half
 {
     width: 40%;
+    max-width: 40%;
     height: 100%;
     display: flex;
     flex-direction: column;
@@ -15,6 +16,7 @@
 
 .task-list-half{
     width: 60%;
+    max-width: 60%;
     height: 100%;
     display: flex;
     flex-direction: column;
