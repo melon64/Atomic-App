@@ -4,7 +4,7 @@ from flask_jwt_extended import JWTManager, create_access_token, get_jwt_identity
 import datetime
 import hashlib
 import urllib
-from .models.model import User
+from .models.model import User, Goals, Task, Comment
 
 user_routes = Blueprint('user_routes', __name__)
 
@@ -62,3 +62,21 @@ def delete_user():
     user = User.objects(username=get_jwt_identity()).first()
     user.delete()
     return jsonify({"message": "User deleted"}), 200
+
+@user_routes.route('/user/validate', methods=['POST'])
+@jwt_required()
+def validate_user():
+    return jsonify({"message": "User token is valid"}), 200
+
+@user_routes.route('/user/goals', methods=['GET'])
+@jwt_required()
+def get_goals():
+    user = User.objects(username=get_jwt_identity()).first()
+    goals = user.goals
+    goal_array = []
+    for goal in goals:
+        goal_dict = {}
+        goal_dict['goal_name'] = goal.goal_name
+        goal_dict['goal_tasks'] = [task.to_mongo().to_dict() for task in goal.tasks]
+        goal_array.append(goal_dict)
+    return jsonify(goal_array), 200

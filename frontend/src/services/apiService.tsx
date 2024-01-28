@@ -7,6 +7,13 @@ interface UserData {
     password: string;
 }
 
+export function setupAxios() {
+    const token = localStorage.getItem('authToken');
+    if (token) {
+        axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+    }
+}
+
 const apiService = {
     signUp: async (userData: UserData) => {
         try {
@@ -48,6 +55,22 @@ const apiService = {
             return response.data;
         } catch (error) {
             throw error;
+        }
+    },
+    GetTaskList: async () => {
+        try {
+            const response = await axios.get(`${API_BASE_URL}/user/goals`);
+            return response.data;
+        } catch (error) {
+            throw error;
+        }
+    },
+    isValidToken: async () => {
+        try {
+            await axios.post(`${API_BASE_URL}/user/validate`);
+            return true;
+        } catch (error) {
+            return false;
         }
     },
 };

@@ -167,3 +167,4 @@ def get_comments(id):
     comments = Comment.objects(goal=goal)
     return jsonify([comment.to_dict() for comment in comments]), 200
 
+
