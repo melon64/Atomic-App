@@ -4,6 +4,7 @@ import "./Goal.css";
 import apiService from '../../services/apiService';
 import { setupAxios } from '../../services/apiService';
 import { useNavigate } from 'react-router-dom';
+import Comments from '../../components/Comments';
 
 interface Task {
     day: number;
@@ -12,8 +13,16 @@ interface Task {
     task_name: string;
 }
 
+interface Comment {
+    goal: string;
+    user: string;
+    text: string;
+    image_url: string;
+    creation_date: string;
+}
+
 interface GoalInterface {
-    comments: any[];
+    comments: Comment[];
     goal_creation_date: string;
     goal_description: string;
     goal_duration: string;
@@ -51,9 +60,49 @@ function Goal() {
         }
         getGoal()
     }, [])
-    
 
-    console.log(goal)
+    console.log(goal);
+
+    const [commentText, setCommentText] = useState('');
+
+    const handleCommentChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        setCommentText(event.target.value);
+    };
+
+    const [commentImage, setCommentImage] = useState<File | null>(null);
+
+    const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        if (event.target.files && event.target.files[0]) {
+            setCommentImage(event.target.files[0]);
+        }
+    };
+
+    const [comments, setComments] = useState<Comment[]>([]);
+    useEffect(() => {
+        const fetchComments = async () => {
+            const comments = await apiService.getComments(params.id);
+            setComments(comments);
+        }
+        fetchComments();
+    }, []);
+
+    const handleCommentSubmit = async () => {
+        try {
+            const formData = new FormData();
+            formData.append('text', commentText);
+            if (commentImage) {
+                formData.append('image', commentImage);
+            }
+            await apiService.addComment(params.id, formData);    
+
+            setCommentText('');
+            setCommentImage(null);
+            
+            window.location.reload();
+        } catch (error) {
+            console.error("Error submitting comment: ", error)
+        }
+    };
 
     return (
         <div className="GoalBox">
@@ -67,7 +116,13 @@ function Goal() {
             {/* Calendar Component */}
             <p>Total number of tasks: {goal?.tasks.length}</p>
             <p>Day started: {goal?.goal_creation_date.split(' ')[0]}</p>
-            
+
+            <input type="text" value={commentText} onChange={handleCommentChange} placeholder="Enter your comment" />
+            <input type="file" onChange={handleImageChange} />
+            <button onClick={handleCommentSubmit}>Submit Comment</button>
+
+            <Comments comments={comments} />
+
         </div>
     );
 }

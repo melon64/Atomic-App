@@ -9,7 +9,7 @@ span {
 .GoalBox {
     display: flex;
     flex-direction: column;
-    align-items: center;
+    align-items: center;    
     justify-content: center;
     width: 100%;
     border-radius: 5px;

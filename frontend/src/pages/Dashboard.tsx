@@ -9,16 +9,16 @@ import './Dashboard.css';
 
 function Dashboard() {
     const navigate = useNavigate();
-  
+
     useEffect(() => {
-      setupAxios();
-      const token = localStorage.getItem('authToken');
-      if (!token || token === 'undefined') {
-        navigate('/');
-      }
+        setupAxios();
+        const token = localStorage.getItem('authToken');
+        if (!token || token === 'undefined') {
+            navigate('/');
+        }
     }, [navigate]);
-  
-   const [tasks, setTasks] = useState([])
+
+    const [tasks, setTasks] = useState([])
     useEffect(() => {
         const fetchTasks = async () => {
             const tasks = await apiService.GetTaskList();

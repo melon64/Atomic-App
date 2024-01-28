@@ -25,8 +25,6 @@ function UserGoals() {
         fetchGoals();
     }, []);
 
-    console.log(goals);
-
     return (
         <div className="UserGoals">
             <h1>Your Goals</h1>
