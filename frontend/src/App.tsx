@@ -9,10 +9,14 @@ import Goal from './pages/Goals/Goal';
 import UserGoals from './pages/Goals/UserGoals';
 import CreateTask from './pages/CreateTask';
 import Calendar from './pages/Calendar';
+import Navbar from './components/MyNavbar';
 
 function App() {
   return (
     <Router>
+      <div className="navbar">
+        <Navbar />
+      </div>
       <Routes>
         <Route path="/" element={<Login />} />
         <Route path="/user" element={<Dashboard />} />
