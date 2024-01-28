@@ -27,14 +27,14 @@ class CohereAPI:
                     {\n\
                         \"tasks\": [{\n\
                             \"title\": Complete 3 leetcode medium problems.\n\
-                            \"start\": 10:00\n\
-                            \"end\": 12:00\n\
+                            \"start\": \"10:00\"\n\
+                            \"end\": \"12:00\"\n\
                             \"day-of-week\": 1\n\
                         },\n\
                         {\n\
                             \"title\": Practice to a friend.\n\
-                            \"start\": 13:00\n\
-                            \"end\": 14:30\n\
+                            \"start\": \"13:00\"\n\
+                            \"end\": \"14:30\"\n\
                             \"day-of-week\": 2\n\
                         },\n]\n\
                     }\n\

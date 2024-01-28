@@ -44,10 +44,12 @@ async def create_goal():
         'goal_status': request.form.get('goal_status'),
         'goal_priority': request.form.get('goal_priority'),
         'isPrivate': request.form.get('isPrivate'),
+        'tasks' : []
     }
     
     task = asyncio.create_task(cohere.generate_schedule(new_goal['goal_description'], None))
     result = await task
+    print(result)
     result = json.loads(result)['tasks']
     for task in result:
         new_task = Task(
@@ -57,6 +59,7 @@ async def create_goal():
             day=task['day-of-week']
         )
         user.update(push__schedule=new_task)
+        new_goal['tasks'].append(new_task)
 
     file = request.files.get('image')
     if file:
