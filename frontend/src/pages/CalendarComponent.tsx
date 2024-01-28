@@ -2,10 +2,20 @@ import moment from "moment"
 import { Calendar, momentLocalizer } from "react-big-calendar"
 import './CalendarComponent.scss'
 
-function CalendarComponent() {
+interface Event {
+  title: string
+  start: Date
+  end: Date
+}
+
+interface eventListProps {
+  events: Event[]
+}
+
+function CalendarComponent({ events = [] }: eventListProps) {
   const localizer = momentLocalizer(moment);
 
-  const events = [
+  const eventss = [
     {
       title: "Event 1",
       start: new Date(2024, 0, 28, 14),
@@ -23,7 +33,7 @@ function CalendarComponent() {
       <div className="myCustomHeight">
         <Calendar
           localizer={localizer}
-          events={events}
+          events={eventss}
           startAccessor="start"
           endAccessor="end"
           defaultView="week"
