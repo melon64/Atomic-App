@@ -10,6 +10,7 @@
 </pre>
 </div>
 
-UofTHacks XI.
+###UofTHacks XI.
 
+###Demo
 [![Atomic App Pitch/Demo](https://img.youtube.com/vi/miuACyarTks/0.jpg)](https://www.youtube.com/watch?v=miuACyarTks)
